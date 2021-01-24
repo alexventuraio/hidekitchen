@@ -1,0 +1,49 @@
+<%= form_with(model: restaurant, local: true) do |form| %>
+  <% if restaurant.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(restaurant.errors.count, "error") %> prohibited this restaurant from being saved:</h2>
+
+      <ul>
+        <% restaurant.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :domain %>
+    <%= form.text_field :domain, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :subdomain %>
+    <%= form.text_field :subdomain, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <% if restaurant.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Destroy', restaurant, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if restaurant.persisted? %>
+      <%= link_to "Cancel", restaurant, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", restaurants_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>
