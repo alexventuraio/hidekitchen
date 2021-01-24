@@ -8,7 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarMain">
       <ul class="navbar-nav mr-auto mt-2 mt-md-0">
         <li class="nav-item">
-          <%= link_to 'Restaurants', restaurants_path, class: "nav-link #{'active' if controller_name == 'dashboard'}" %>
+          <%= link_to 'Restaurants', restaurants_path, class: "nav-link #{'active' if controller_name == 'restaurants'}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Products', products_path, class: "nav-link #{'active' if controller_name == 'products'}" %>
         </li>
       </ul>
       <ul class="navbar-nav">
