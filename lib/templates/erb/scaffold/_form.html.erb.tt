@@ -1,34 +1,46 @@
-<%% if <%= singular_table_name %>.errors.any? %>
-  <%% <%= singular_table_name %>.errors.full_messages.each do |message| %>
-  <div class="alert alert-danger" role="alert">
-    <%%= message %>
-  </div>
+<%%= form_with(model: <%= model_resource_name %>, local: true) do |form| %>
+  <%% if <%= singular_table_name %>.errors.any? %>
+    <div id="error_explanation">
+      <h2><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+
+      <ul>
+        <%% <%= singular_table_name %>.errors.full_messages.each do |message| %>
+          <li><%%= message %></li>
+        <%% end %>
+      </ul>
+    </div>
   <%% end %>
-<%% end %>
-<%%= form_with(model: <%= model_resource_name %>, local: true) do |form| -%>
-<div class="card">
-  <ul class="list-group list-group-flush">
-<% attributes.reject{|a| a.name == 'type' || a.name == 'deleted_at' || a.name.end_with?("_count")}.each do |attribute| -%>
-    <li class="list-group-item">
-      <div class="form-group">
+
+<% attributes.each do |attribute| -%>
+  <div class="form-group">
 <% if attribute.password_digest? -%>
-        <%%= form.label :password, class: "font-weight-bold" %>
-        <%%= form.password_field :password, placeholder: "Enter password", class: "form-control" %>
-        <%%= form.label :password_confirmation, class: "font-weight-bold" %>
-        <%%= form.password_field :password_confirmation, placeholder: "Enter password confirmation", class: "form-control" %>
-<% else -%>
-        <%%= form.label :<%= attribute.column_name %>, class: "font-weight-bold" %>
-        <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, placeholder: "Enter <%= attribute.column_name %>", class: "form-control" %>
-<% end -%>
-      </div>
-    </li>
-<% end -%>
-  </ul>
-  <div class="card-footer">
-    <%%= link_to "Cancel", <%= model_resource_name %>, class: 'btn btn-outline-secondary float-left' if <%= singular_table_name %>.persisted? %>
-    <%%= link_to "Cancel", <%= index_helper %>_path, class: 'btn btn-outline-secondary float-left' if !<%= singular_table_name %>.persisted? %>
-    <%%= form.submit "Save", class: "btn btn-primary float-right" if <%= singular_table_name %>.persisted? %>
-    <%%= form.submit "Create", class: "btn btn-primary float-right" if !<%= singular_table_name %>.persisted? %>
+    <%%= form.label :password %>
+    <%%= form.password_field :password, class: 'form-control' %>
   </div>
-</div>
+
+  <div class="form-group">
+    <%%= form.label :password_confirmation %>
+    <%%= form.password_field :password_confirmation, class: 'form-control' %>
+<% else -%>
+    <%%= form.label :<%= attribute.column_name %> %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: 'form-control' %>
+<% end -%>
+  </div>
+
+<% end -%>
+  <div class="form-group">
+    <%% if <%= model_resource_name %>.persisted? %>
+      <div class="float-right">
+        <%%= link_to 'Destroy', <%= model_resource_name %>, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <%% end %>
+
+    <%%= form.submit class: 'btn btn-primary' %>
+
+    <%% if <%= model_resource_name %>.persisted? %>
+      <%%= link_to "Cancel", <%= model_resource_name %>, class: "btn btn-link" %>
+    <%% else %>
+      <%%= link_to "Cancel", <%= index_helper %>_path, class: "btn btn-link" %>
+    <%% end %>
+  </div>
 <%% end %>
