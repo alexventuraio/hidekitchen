@@ -60,3 +60,12 @@ gem 'devise-pwned_password'
 gem 'gravatar_image_tag'
 
 gem "acts_as_tenant", "~> 0.5.0"
+
+group :development do
+  gem 'capistrano', '~> 3.15'
+  gem 'capistrano-rails', '~> 1.6', '>= 1.6.1'
+  gem 'capistrano-rails-console', '~> 2.3'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rvm', '~> 0.1.2'
+  gem 'slackistrano', '~> 4.0', '>= 4.0.1'
+end
