@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
-  belongs_to :restaurant
+  acts_as_tenant(:restaurant)
+
   validates :name, :price, presence: true
 end
